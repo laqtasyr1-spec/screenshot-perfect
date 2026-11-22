@@ -28,3 +28,12 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Plan tiers, rates, minimum and return math live only in `src/lib/plans.ts` (tested in `plans.test.ts`); UI must call it rather than re-deriving numbers, so calculator, cards and dashboards never disagree.
+- Dashboards run on fictional data from `src/lib/demo-data.ts` through the in-memory `src/lib/demo-store.ts`; replace the store with a secure backend before any real money flows.
+- The app is Arabic RTL-first: use logical spacing/position utilities (ps/pe, start/end) and wrap figures in the `num` utility so digits stay left-to-right.
+- Motion effects live in `src/components/fx/` and CSS utilities in `src/styles.css` (spotlight, beam, aurora, shine); reuse them instead of one-off animations so the site's motion language stays consistent and respects reduced-motion.
+- Money is a JS number only inside the demo store; a real backend must store amounts as integer cents (or a Decimal type), never floats, so rounding never drifts between ledger, returns and withdrawals.
+- Plan math in `plans.ts` takes an optional `plans` list (default `PLANS`); store-backed screens pass `state.plans` so admin rate edits apply, while tier boundaries stay fixed constants.
+- The brand mark exists once as `PillarEmblem` (detailed, `fx/Pillar.tsx`) and once as `LogoMark` (color / mono / favicon variants, `site/Logo.tsx`); `public/favicon.svg` and `favicon.ico` are generated from the favicon variant, so update all three together.

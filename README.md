@@ -1,29 +1,59 @@
-# Welcome to your Lovable project
+# ركيزة — منصة استثمار رقمية (نموذج تجريبي)
 
-This project was built with [Lovable](https://lovable.dev).
+واجهة عربية (RTL) لمنصة استثمار شهرية بالدولار موجّهة للمستثمرين في سوريا: صفحات تعريفية، حاسبة عوائد،
+لوحة مستثمر ولوحة إدارة.
 
-## Build with Lovable
+> **كل البيانات تجريبية.** لا توجد خوادم ولا حسابات حقيقية ولا تحويلات أموال. الأرقام في لوحات التحكم
+> وهمية (`src/lib/demo-data.ts`) وتُحفظ في ذاكرة المتصفح فقط وتُمسح عند إعادة التحميل.
+> العوائد المعروضة مستهدفة وتقديرية وغير مضمونة.
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+## الخطط
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+| الخطة | الشريحة | العائد الشهري المستهدف |
+| --- | --- | --- |
+| خطة البداية | من 10$ إلى أقل من 100$ | 7% |
+| خطة النمو | من 100$ حتى 1,000$ ضمناً | 5% |
+| خطة الرسوخ | أكثر من 1,000$ | 4% |
 
-## Development
+مدة كل دورة شهر واحد قابلة للتجديد. تُطبَّق نسبة الشريحة على كامل المبلغ، ويُحسب العائد على أصل المبلغ فقط
+دون إعادة استثمار تلقائي. المصدر الوحيد لهذه القواعد هو `src/lib/plans.ts`.
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+## التشغيل
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+```bash
+bun install
+bun run dev      # خادم التطوير
+bun run test     # الاختبارات (Vitest)
+bun run lint     # ESLint
+bun run build    # بناء الإنتاج
 ```
 
-## Built with
+## البنية
 
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
+```text
+src/
+  routes/            صفحات TanStack Router (عامة، /dashboard/*، /admin/*)
+  components/
+    landing/         أقسام الصفحة الرئيسية (Hero، الخطط، الحاسبة، الأسئلة...)
+    site/            الهيكل العام: الرأس، التذييل، الشعار (Logo)، التنبيهات
+    app/             هيكل لوحات المستثمر والإدارة
+    fx/              الحركة والمؤثرات (PillarEmblem، CountUp، Aurora...)
+    ui/              مكونات shadcn
+  lib/
+    plans.ts         الشرائح والنسب وحساب العوائد (مُختبَر في plans.test.ts)
+    demo-data.ts     بيانات تجريبية وهمية
+    demo-store.ts    مخزن في الذاكرة لتجربة الطلبات والسحب وتعديل الخطط
+  styles.css         نظام التصميم: الألوان (oklch) والخطوط والأدوات المخصّصة
+docs/redesign-brief.md  موجز إعادة التصميم البصري (أرشيف)
+```
+
+## قواعد المشروع
+
+- لا يُعاد حساب أي نسبة أو رقم في الواجهة؛ كل شيء يمر عبر `src/lib/plans.ts`.
+- العربية و RTL أولاً: أدوات منطقية (`ps/pe`، `start/end`) والأرقام داخل الأداة `num`.
+- لا ألوان ثابتة في المكونات؛ كل الألوان tokens في `src/styles.css`.
+- الحركة في `src/components/fx/` وتحترم تفضيل تقليل الحركة.
+- لا تعدّل `src/routeTree.gen.ts` (يُولَّد تلقائياً).
+- قبل أي أموال حقيقية: استبدال المخزن التجريبي بخلفية آمنة، وتخزين المبالغ كأعداد صحيحة (سنتات) أو Decimal.
+
+راجع `AGENTS.md` للقواعد التقنية و `roadmap.md` لحالة العمل.

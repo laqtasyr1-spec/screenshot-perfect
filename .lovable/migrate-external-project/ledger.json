@@ -1,0 +1,79 @@
+[
+  {
+    "capability": "code",
+    "source": "code archive (TanStack Start, same template revision)",
+    "outcome": "migrate",
+    "status": "done",
+    "next_action": "none"
+  },
+  {
+    "capability": "schema",
+    "source": "none detected",
+    "outcome": "not applicable",
+    "status": "verified",
+    "next_action": "none"
+  },
+  {
+    "capability": "records",
+    "source": "fictional demo data in src/lib/demo-data.ts (in-memory store)",
+    "outcome": "kept as demo",
+    "status": "verified",
+    "next_action": "none"
+  },
+  {
+    "capability": "auth identities",
+    "source": "none (demo login screens only)",
+    "outcome": "not applicable",
+    "status": "verified",
+    "next_action": "none"
+  },
+  {
+    "capability": "authorization",
+    "source": "none",
+    "outcome": "not applicable",
+    "status": "verified",
+    "next_action": "none"
+  },
+  {
+    "capability": "uploaded file bytes",
+    "source": "none",
+    "outcome": "not applicable",
+    "status": "verified",
+    "next_action": "none"
+  },
+  {
+    "capability": "external providers",
+    "source": "none",
+    "outcome": "not applicable",
+    "status": "verified",
+    "next_action": "none"
+  },
+  {
+    "capability": "public endpoints / webhooks / schedules",
+    "source": "none",
+    "outcome": "not applicable",
+    "status": "verified",
+    "next_action": "none"
+  },
+  {
+    "capability": "secrets",
+    "source": "none",
+    "outcome": "not applicable",
+    "status": "verified",
+    "next_action": "none"
+  },
+  {
+    "capability": "cutover",
+    "source": "n/a",
+    "outcome": "none required",
+    "status": "verified",
+    "next_action": "none"
+  },
+  {
+    "capability": "verification",
+    "source": "lint/test/build + screenshots",
+    "outcome": "verified",
+    "status": "verified",
+    "next_action": "none (lint 0 errors, 20 tests pass, build OK, screenshots 375/1440 + reduced motion, admin-rate flow checked in browser)"
+  }
+]

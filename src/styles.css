@@ -1,9 +1,6 @@
 /*
  * Tailwind v4 entry: config lives here, with no tailwind.config.js or PostCSS plugin.
- * - Keep every @import in this top block, above @theme and the rest of the file. Install an
- *   npm package before @importing its CSS. Never @import a remote URL (web fonts, CDN CSS): the
- *   build resolves @import from the filesystem. Load those with a <link> in the head() of
- *   src/routes/__root.tsx and name the family in a --font-* token in @theme inline below.
+ * Keep every @import in this top block. Web fonts load via <link> in src/routes/__root.tsx.
  */
 @import "tailwindcss" source(none);
 @source "../src";
@@ -12,21 +9,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system definition.
- *
- * The design lives in this file: oklch color tokens on the shadcn variables
- * (--background, --foreground, --primary, --secondary, --muted, --accent, ...) plus
- * new tokens as needed, font tokens, and custom styles and animations.
- *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
- *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
- *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ * Rakiza design system — institutional finance on midnight navy,
+ * sapphire for the brand, quiet gold for prestige, green only for gains. Dark only.
  */
 
 @theme inline {
@@ -37,6 +21,10 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+
+  --font-sans: "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-display: "Reem Kufi", "IBM Plex Sans Arabic", serif;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -45,6 +33,7 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-glow: var(--primary-glow);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -53,7 +42,18 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-gold-foreground: var(--gold-foreground);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
@@ -70,77 +70,121 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --shadow-glow: var(--shadow-glow-value);
+  --shadow-gold: var(--shadow-gold-value);
+  --shadow-panel: var(--shadow-panel-value);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
-}
+  --radius: 0.875rem;
 
-.dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+  /* Deep navy, calm and institutional */
+  --background: oklch(0.17 0.03 255);
+  --surface: oklch(0.215 0.035 255);
+  --surface-raised: oklch(0.255 0.038 255);
+  --foreground: oklch(0.955 0.008 250);
+
+  --card: oklch(0.215 0.035 255);
+  --card-foreground: oklch(0.955 0.008 250);
+  --popover: oklch(0.225 0.036 255);
+  --popover-foreground: oklch(0.955 0.008 250);
+
+  /* Sapphire — the brand */
+  --primary: oklch(0.72 0.115 232);
+  --primary-glow: oklch(0.8 0.12 225);
+  --primary-foreground: oklch(0.16 0.04 250);
+
+  /* Gold — prestige accents only */
+  --gold: oklch(0.8 0.09 85);
+  --gold-soft: color-mix(in oklab, var(--gold) 13%, transparent);
+  --gold-foreground: oklch(0.2 0.03 80);
+
+  /* Success — positive money values, gains, approved states, check marks only */
+  --success: oklch(0.74 0.15 158);
+  --success-foreground: oklch(0.17 0.04 160);
+
+  --secondary: oklch(0.26 0.036 255);
+  --secondary-foreground: oklch(0.955 0.008 250);
+  --muted: oklch(0.24 0.032 255);
+  --muted-foreground: oklch(0.72 0.02 250);
+  --accent: oklch(0.275 0.04 255);
+  --accent-foreground: oklch(0.955 0.008 250);
+
+  --destructive: oklch(0.68 0.18 25);
+  --destructive-foreground: oklch(0.98 0.005 25);
+  --warning: oklch(0.8 0.14 75);
+  --warning-foreground: oklch(0.22 0.04 75);
+  --info: oklch(0.78 0.08 195);
+
+  --border: oklch(1 0 0 / 8%);
+  --border-strong: oklch(1 0 0 / 14%);
+  --input: oklch(1 0 0 / 13%);
+  --ring: color-mix(in oklab, var(--primary) 70%, transparent);
+
+  --chart-1: var(--primary);
+  --chart-2: var(--gold);
+  --chart-3: var(--success);
+  --chart-4: oklch(0.62 0.03 255);
+  --chart-5: var(--destructive);
+
+  --sidebar: oklch(0.15 0.028 255);
+  --sidebar-foreground: oklch(0.87 0.012 250);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: oklch(0.225 0.035 255);
+  --sidebar-accent-foreground: oklch(0.96 0.006 250);
+  --sidebar-border: oklch(1 0 0 / 7%);
+  --sidebar-ring: var(--ring);
+
+  /* Pillar emblem material (hero emblem, calculator, logo). Light comes from the upper left. */
+  --pillar-highlight: color-mix(in oklab, var(--primary-glow) 58%, var(--foreground));
+  --pillar-mid: color-mix(in oklab, var(--primary) 52%, var(--surface-raised));
+  --pillar-shadow: color-mix(in oklab, var(--primary) 20%, var(--background));
+  --pillar-reflect: color-mix(in oklab, var(--primary) 34%, var(--surface));
+  --pillar-rim: color-mix(in oklab, var(--primary-glow) 35%, var(--foreground));
+  --pillar-flute: color-mix(in oklab, var(--background) 42%, transparent);
+  --cap-highlight: color-mix(in oklab, var(--gold) 62%, var(--foreground));
+  --cap-mid: var(--gold);
+  --cap-shadow: color-mix(in oklab, var(--gold) 52%, var(--background));
+  --cap-top: color-mix(in oklab, var(--gold) 80%, var(--foreground));
+  --cap-specular: color-mix(in oklab, var(--gold) 22%, var(--foreground));
+  --cap-underside: color-mix(in oklab, var(--gold) 28%, var(--background));
+  --plinth: color-mix(in oklab, var(--primary) 8%, var(--background));
+  --plinth-shadow: color-mix(in oklab, var(--background) 72%, black);
+  --plinth-top: color-mix(in oklab, var(--primary) 16%, var(--surface-raised));
+  --shadow-ink: color-mix(in oklab, var(--background) 30%, black);
+
+  --gradient-hero:
+    radial-gradient(
+      60% 55% at 15% 30%,
+      color-mix(in oklab, var(--primary) 16%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      45% 45% at 85% 10%,
+      color-mix(in oklab, var(--gold) 9%, transparent),
+      transparent 70%
+    ),
+    linear-gradient(180deg, var(--background), oklch(0.155 0.028 255));
+  --gradient-brand: linear-gradient(135deg, var(--primary-glow), oklch(0.64 0.12 238));
+  --gradient-gold: linear-gradient(120deg, oklch(0.87 0.07 88), oklch(0.74 0.09 80));
+  --gradient-panel: linear-gradient(
+    160deg,
+    color-mix(in oklab, var(--surface-raised) 88%, transparent),
+    color-mix(in oklab, var(--surface) 88%, transparent)
+  );
+  --gradient-featured: linear-gradient(
+    160deg,
+    color-mix(in oklab, var(--primary) 18%, var(--surface)),
+    color-mix(in oklab, var(--surface) 92%, transparent) 60%
+  );
+
+  --shadow-glow-value: 0 20px 60px -24px color-mix(in oklab, var(--primary) 45%, transparent);
+  --shadow-gold-value: 0 18px 50px -24px color-mix(in oklab, var(--gold) 40%, transparent);
+  --shadow-panel-value: 0 30px 80px -40px oklch(0.05 0.02 255 / 90%);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
@@ -148,8 +192,334 @@
     border-color: var(--color-border);
   }
 
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "kern";
   }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: 0;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--primary) 35%, transparent);
+  }
+}
+
+/* Numbers stay left-to-right and evenly spaced inside Arabic text */
+@utility num {
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility bg-hero {
+  background: var(--gradient-hero);
+}
+
+@utility bg-panel {
+  background: var(--gradient-panel);
+}
+
+@utility bg-featured {
+  background: var(--gradient-featured);
+}
+
+@utility bg-brand-gradient {
+  background: var(--gradient-brand);
+}
+
+@utility bg-gold-gradient {
+  background: var(--gradient-gold);
+}
+
+@utility text-gold-gradient {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility text-brand-gradient {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Restrained glass: used for floating panels only */
+@utility glass {
+  background: color-mix(in oklab, var(--surface) 60%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid oklch(1 0 0 / 9%);
+}
+
+/* Fine architectural grid behind hero sections */
+@utility bg-grid {
+  background-image:
+    linear-gradient(oklch(1 0 0 / 3.5%) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(1 0 0 / 3.5%) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 80%);
+}
+
+/* Thin gold hairline used as a section divider */
+@utility hairline-gold {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--gold) 55%, transparent),
+    transparent
+  );
+}
+
+@utility ring-gold {
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--gold) 35%, transparent);
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 55%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 7px color-mix(in oklab, var(--primary) 0%, transparent);
+  }
+}
+
+@utility animate-float-slow {
+  animation: float-slow 7s ease-in-out infinite;
+}
+
+@utility animate-pulse-dot {
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ───────────── Motion layer: calm, precise, institutional ─────────────
+ * transform/opacity only, ease-out-expo, no bounce. Infinite loops are rare and
+ * pause off-screen (InViewPause sets data-fx-paused) and under reduced motion.
+ */
+
+@keyframes aurora-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(6%, -5%, 0) scale(1.08);
+  }
+}
+
+@keyframes aurora-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-6%, 5%, 0) scale(1.06);
+  }
+}
+
+@keyframes shine-sweep {
+  0% {
+    transform: translateX(-160%) skewX(-20deg);
+  }
+  55%,
+  100% {
+    transform: translateX(320%) skewX(-20deg);
+  }
+}
+
+@utility animate-aurora-a {
+  animation: aurora-a 30s ease-in-out infinite;
+}
+@utility animate-aurora-b {
+  animation: aurora-b 36s ease-in-out infinite;
+}
+
+/* Paused when the owning block is off-screen */
+[data-fx-paused="true"],
+[data-fx-paused="true"] * {
+  animation-play-state: paused !important;
+}
+
+/* Soft blurred colour field that drifts slowly */
+@utility aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Film grain to remove the flat "template" look */
+@utility bg-noise {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+}
+
+/* Large soft light following the cursor (vars set by FxPointer) */
+@utility cursor-glow {
+  background: radial-gradient(
+    600px circle at var(--cx, -999px) var(--cy, -999px),
+    color-mix(in oklab, var(--primary) 6%, transparent),
+    transparent 55%
+  );
+}
+
+/* Cursor-following light inside cards (vars set by FxPointer) */
+@utility spotlight {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(
+      480px circle at var(--mx, 50%) var(--my, -30%),
+      color-mix(in oklab, var(--primary) 12%, transparent),
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.45s ease;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    pointer-events: none;
+    background: radial-gradient(
+      260px circle at var(--mx, 50%) var(--my, -30%),
+      color-mix(in oklab, var(--gold) 60%, transparent),
+      transparent 65%
+    );
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+  }
+  &:hover::before,
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+/* Lift for interactive cards; pairs with spotlight */
+@utility lift {
+  transition:
+    transform 0.5s var(--ease-out-expo),
+    border-color 0.4s ease,
+    box-shadow 0.5s ease;
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* Glossy sweep — reserved for the single primary hero CTA */
+@utility shine {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 35%;
+    background: linear-gradient(90deg, transparent, oklch(1 0 0 / 32%), transparent);
+    animation: shine-sweep 4.8s ease-in-out infinite;
+    pointer-events: none;
+  }
+}
+
+/* Fade edges of horizontally scrolling strips */
+@utility mask-fade-x {
+  mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+}
+
+/* Touch devices and small screens: drop heavy blur, grain and glass */
+@media (pointer: coarse), (max-width: 767px) {
+  .aurora-blob {
+    filter: blur(48px);
+    will-change: auto;
+  }
+  .bg-noise {
+    display: none;
+  }
+  .glass {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: color-mix(in oklab, var(--surface) 92%, transparent);
+  }
+}
+
+/* Print-friendly account statement */
+@media print {
+  :root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.2 0.01 255);
+    --card: oklch(1 0 0);
+    --muted-foreground: oklch(0.45 0.01 255);
+    --border: oklch(0.85 0 0);
+    --success: oklch(0.45 0.13 158);
+    --primary: oklch(0.45 0.12 240);
+  }
+  html {
+    color-scheme: light;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .lg\:ps-72 {
+    padding-inline-start: 0 !important;
+  }
+}
+.print-only {
+  display: none;
 }
