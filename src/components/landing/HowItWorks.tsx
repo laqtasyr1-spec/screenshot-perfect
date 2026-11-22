@@ -140,7 +140,7 @@ function StackedTimeline({ className }: { className?: string }) {
   return (
     <div className={className}>
       <Heading />
-      <ol className="relative mt-14 space-y-8 border-s border-border-strong ps-8">
+      <ol className="relative mt-10 space-y-7 border-s border-border-strong ps-8 md:mt-14 md:space-y-8">
         {CYCLE.map((s, i) => (
           <li key={s.title} className="relative">
             <Reveal delay={i * 0.06} y={16}>
@@ -166,7 +166,7 @@ export function HowItWorks() {
   const mounted = useMounted();
   const reduce = useReducedMotion() && mounted;
   return (
-    <section id="how" className="relative py-24 lg:py-0">
+    <section id="how" className="relative py-16 lg:py-0">
       <div className="mx-auto max-w-7xl px-6">
         {reduce ? (
           <StackedTimeline className="lg:py-32" />

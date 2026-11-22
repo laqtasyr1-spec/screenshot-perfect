@@ -37,7 +37,7 @@ export function SiteHeader() {
     >
       <div
         className={cn(
-          "relative isolate mx-auto flex max-w-7xl items-center justify-between rounded-full px-4 transition-all duration-500 md:px-6",
+          "relative isolate mx-auto flex max-w-7xl items-center justify-between rounded-full ps-4 pe-2 transition-all duration-500 md:px-6",
           scrolled
             ? "h-14 max-w-6xl border border-border-strong bg-background/80 shadow-panel backdrop-blur-xl"
             : "h-16 border border-transparent",
@@ -101,15 +101,9 @@ export function SiteHeader() {
           </Button>
         </div>
 
-        <div className="flex items-center gap-1.5 lg:hidden">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-11 w-11"
-            onClick={openCommandPalette}
-            aria-label="بحث سريع"
-          >
-            <Search />
+        <div className="flex items-center gap-2 lg:hidden">
+          <Button variant="hero" size="sm" className="h-10 rounded-full px-4" asChild>
+            <Link to="/register">ابدأ الآن</Link>
           </Button>
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
@@ -123,7 +117,18 @@ export function SiteHeader() {
             >
               <SheetTitle className="sr-only">القائمة</SheetTitle>
               <Logo />
-              <nav className="mt-8 flex flex-col gap-1" aria-label="التنقل في الجوال">
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  openCommandPalette();
+                }}
+                className="mt-6 flex min-h-12 items-center gap-3 rounded-xl border border-border bg-background/40 px-4 text-sm text-muted-foreground"
+              >
+                <Search className="h-4 w-4" />
+                ابحث في المنصة
+              </button>
+              <nav className="mt-4 flex flex-col gap-1" aria-label="التنقل في الجوال">
                 {NAV_LINKS.map((l) => (
                   <Link
                     key={l.to}

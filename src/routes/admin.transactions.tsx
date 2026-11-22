@@ -101,14 +101,22 @@ function AdminTransactions() {
               {rows.length === 0 && <EmptyRow colSpan={7} />}
               {rows.map((t) => (
                 <tr key={t.id} className={tableCls.tr}>
-                  <td className={tableCls.td}>
+                  <td data-label="رقم العملية" className={tableCls.td}>
                     <span className="num text-muted-foreground">{t.id}</span>
                   </td>
-                  <td className={tableCls.td}>{t.user}</td>
-                  <td className={tableCls.td}>{txType[t.type]}</td>
-                  <td className={tableCls.td}>{t.note}</td>
-                  <td className={tableCls.td}>{formatDate(t.date)}</td>
-                  <td className={tableCls.td}>
+                  <td data-label="المستخدم" className={tableCls.td}>
+                    {t.user}
+                  </td>
+                  <td data-label="النوع" className={tableCls.td}>
+                    {txType[t.type]}
+                  </td>
+                  <td data-label="الوصف" className={tableCls.td}>
+                    {t.note}
+                  </td>
+                  <td data-label="التاريخ" className={tableCls.td}>
+                    {formatDate(t.date)}
+                  </td>
+                  <td data-label="المبلغ" className={tableCls.td}>
                     <span
                       className={cn("num font-semibold", t.type !== "withdrawal" && "text-primary")}
                     >
@@ -116,7 +124,7 @@ function AdminTransactions() {
                       {formatUSDFixed(t.amount)}
                     </span>
                   </td>
-                  <td className={tableCls.td}>
+                  <td data-label="الحالة" className={tableCls.td}>
                     <StatusBadge tone={txStatus[t.status].tone}>
                       {txStatus[t.status].label}
                     </StatusBadge>

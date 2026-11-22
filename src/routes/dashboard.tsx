@@ -24,11 +24,11 @@ export const Route = createFileRoute("/dashboard")({
 });
 
 const NAV: NavItem[] = [
-  { to: "/dashboard", label: "نظرة عامة", icon: LayoutDashboard, exact: true },
-  { to: "/dashboard/investments", label: "استثماراتي", icon: Wallet },
-  { to: "/dashboard/invest", label: "طلب استثمار جديد", icon: PlusCircle },
+  { to: "/dashboard", label: "نظرة عامة", icon: LayoutDashboard, exact: true, tab: "الرئيسية" },
+  { to: "/dashboard/investments", label: "استثماراتي", icon: Wallet, tab: "استثماراتي" },
+  { to: "/dashboard/invest", label: "طلب استثمار جديد", icon: PlusCircle, tab: "استثمار" },
   { to: "/dashboard/transactions", label: "سجل العمليات", icon: ReceiptText },
-  { to: "/dashboard/withdrawals", label: "السحوبات", icon: ArrowDownToLine },
+  { to: "/dashboard/withdrawals", label: "السحوبات", icon: ArrowDownToLine, tab: "السحوبات" },
   { to: "/dashboard/profile", label: "الملف الشخصي والأمان", icon: ShieldCheck },
 ];
 

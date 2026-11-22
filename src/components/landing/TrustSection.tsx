@@ -68,9 +68,9 @@ export function TrustSection() {
   const topic = TRUST_TOPICS.find((t) => t.id === active) ?? TRUST_TOPICS[0]!;
 
   return (
-    <section id="trust" className="relative py-24 md:py-32">
+    <section id="trust" className="relative py-16 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="relative overflow-hidden rounded-[2rem] border border-border bg-sidebar p-6 md:p-12">
+        <div className="relative overflow-hidden rounded-3xl border border-border bg-sidebar p-5 md:rounded-[2rem] md:p-12">
           <Aurora intensity="soft" />
           <div className="relative">
             <SectionHeading
@@ -79,9 +79,9 @@ export function TrustSection() {
               description="الثقة لا تُبنى بالوعود. هذه المعلومات متاحة لكل زائر قبل التسجيل، وتُعاد في العقد بالتفصيل."
             />
 
-            <div className="mt-12 grid gap-8 lg:grid-cols-[320px_1fr]">
+            <div className="mt-8 grid gap-4 md:mt-12 lg:grid-cols-[320px_1fr] lg:gap-8">
               <div
-                className="flex gap-2 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible lg:pb-0"
+                className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5 pb-1 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:pb-0"
                 role="tablist"
                 aria-label="مواضيع الشفافية"
               >
@@ -92,7 +92,7 @@ export function TrustSection() {
                     aria-selected={active === t.id}
                     onClick={() => setActive(t.id)}
                     className={cn(
-                      "relative flex shrink-0 items-center gap-3 rounded-xl px-4 py-3.5 text-start text-sm transition-colors",
+                      "relative flex min-h-11 shrink-0 items-center gap-2.5 rounded-xl border border-border px-3.5 py-2.5 text-start text-sm transition-colors lg:gap-3 lg:border-transparent lg:px-4 lg:py-3.5",
                       active === t.id
                         ? "text-foreground"
                         : "text-muted-foreground hover:text-foreground",
@@ -113,7 +113,7 @@ export function TrustSection() {
               </div>
 
               <div
-                className="spotlight min-h-72 rounded-2xl border border-border bg-background/50 p-6 backdrop-blur md:p-10"
+                className="spotlight rounded-2xl border border-border bg-background/50 p-5 backdrop-blur md:min-h-72 md:p-10"
                 role="tabpanel"
               >
                 <AnimatePresence mode="wait">
@@ -124,11 +124,16 @@ export function TrustSection() {
                     exit={{ opacity: 0, x: 16 }}
                     transition={{ duration: 0.35 }}
                   >
-                    <topic.icon className="h-8 w-8 text-gold" strokeWidth={1.4} />
-                    <h3 className="mt-5 text-2xl font-semibold">{topic.title}</h3>
-                    <ul className="mt-6 space-y-4">
+                    <topic.icon className="h-7 w-7 text-gold md:h-8 md:w-8" strokeWidth={1.4} />
+                    <h3 className="mt-4 text-xl font-semibold md:mt-5 md:text-2xl">
+                      {topic.title}
+                    </h3>
+                    <ul className="mt-5 space-y-3 md:mt-6 md:space-y-4">
                       {topic.points.map((p, i) => (
-                        <li key={p} className="flex gap-4 text-base leading-8 text-foreground/85">
+                        <li
+                          key={p}
+                          className="flex gap-3 text-[15px] leading-7 text-foreground/85 md:gap-4 md:text-base md:leading-8"
+                        >
                           <span className="num mt-1 text-xs text-gold">0{i + 1}</span>
                           {p}
                         </li>

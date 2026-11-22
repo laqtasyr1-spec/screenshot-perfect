@@ -33,7 +33,7 @@ export function PageIntro({
   icon: LucideIcon;
 }) {
   return (
-    <section className="relative overflow-hidden pb-16 pt-28 md:pb-24 md:pt-40">
+    <section className="relative overflow-hidden pb-12 pt-24 md:pb-24 md:pt-40">
       <Aurora />
       <div className="bg-grid pointer-events-none absolute inset-0" />
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 md:grid-cols-[1.4fr_1fr]">
@@ -56,7 +56,7 @@ export function PageIntro({
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground"
+            className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground sm:mt-6 sm:text-lg"
           >
             {description}
           </motion.p>

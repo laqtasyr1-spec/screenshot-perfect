@@ -22,14 +22,16 @@ export function PageHeader({
   actions?: ReactNode;
 }) {
   return (
-    <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+    <div className="mb-6 flex flex-col justify-between gap-4 md:mb-8 md:flex-row md:items-end">
       <div>
-        <h1 className="text-3xl font-semibold">{title}</h1>
+        <h1 className="text-2xl font-semibold sm:text-3xl">{title}</h1>
         {description && (
           <p className="mt-2 text-sm leading-7 text-muted-foreground">{description}</p>
         )}
       </div>
-      {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
+      {actions && (
+        <div className="grid auto-cols-fr grid-flow-col gap-2 sm:flex sm:flex-wrap">{actions}</div>
+      )}
     </div>
   );
 }
@@ -80,23 +82,27 @@ export function StatCard({
       transition={{ delay: index * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       layout
       className={cn(
-        "spotlight lift relative rounded-2xl border p-5",
+        "spotlight lift relative min-w-0 rounded-2xl border p-4 sm:p-5",
         tone === "primary" ? "border-primary/30 bg-featured" : "border-border bg-card",
       )}
     >
-      <div className="flex items-start justify-between">
-        <p className="text-sm text-muted-foreground">{label}</p>
+      <div className="flex items-start justify-between gap-2">
+        <p className="text-xs leading-5 text-muted-foreground sm:text-sm">{label}</p>
         <span
           className={cn(
-            "grid h-9 w-9 place-items-center rounded-xl",
+            "grid h-8 w-8 shrink-0 place-items-center rounded-xl sm:h-9 sm:w-9",
             tone === "gold" ? "bg-gold-soft text-gold" : "bg-primary/10 text-primary",
           )}
         >
           <Icon className="h-[18px] w-[18px]" strokeWidth={1.7} />
         </span>
       </div>
-      <p className="mt-4 text-start font-display text-3xl font-semibold">{value}</p>
-      {hint && <p className="mt-1.5 text-xs text-muted-foreground">{hint}</p>}
+      <p className="mt-3 truncate text-start font-display text-2xl font-semibold sm:mt-4 sm:text-3xl">
+        {value}
+      </p>
+      {hint && (
+        <p className="mt-1.5 text-[11px] leading-5 text-muted-foreground sm:text-xs">{hint}</p>
+      )}
     </motion.div>
   );
 }
@@ -193,8 +199,9 @@ export function EmptyRow({
 
 /** Shared table styling for dashboard lists. */
 export const tableCls = {
-  wrap: "overflow-x-auto",
-  table: "w-full min-w-[720px] text-sm",
+  wrap: "sm:overflow-x-auto",
+  /** `table-cards` turns rows into stacked cards on phones (see styles.css). */
+  table: "table-cards w-full text-sm sm:min-w-[720px]",
   th: "px-5 py-3 text-start text-xs font-medium text-muted-foreground",
   td: "px-5 py-3.5 align-middle",
   tr: "border-t border-border transition-colors hover:bg-accent/40",

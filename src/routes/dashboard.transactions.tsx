@@ -63,7 +63,7 @@ function TransactionsPage() {
           </Button>
         }
       />
-      <div className="mb-6 grid gap-4 sm:grid-cols-3">
+      <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 [&>*:first-child]:col-span-2 sm:[&>*:first-child]:col-span-1">
         {(
           [
             ["deposit", "إجمالي الإيداعات المكتملة", "text-foreground"],
@@ -71,9 +71,14 @@ function TransactionsPage() {
             ["withdrawal", "إجمالي السحوبات المكتملة", "text-gold"],
           ] as const
         ).map(([k, label, color]) => (
-          <div key={k} className="rounded-2xl border border-border bg-card p-5">
-            <p className="text-sm text-muted-foreground">{label}</p>
-            <p className={cn("num mt-2 text-start font-display text-2xl font-semibold", color)}>
+          <div key={k} className="min-w-0 rounded-2xl border border-border bg-card p-4 sm:p-5">
+            <p className="text-xs leading-5 text-muted-foreground sm:text-sm">{label}</p>
+            <p
+              className={cn(
+                "num mt-2 truncate text-start font-display text-xl font-semibold sm:text-2xl",
+                color,
+              )}
+            >
               {formatUSDFixed(sum(k))}
             </p>
           </div>
@@ -119,13 +124,19 @@ function TransactionsPage() {
               {rows.length === 0 && <EmptyRow colSpan={6} />}
               {rows.map((t) => (
                 <tr key={t.id} className={tableCls.tr}>
-                  <td className={tableCls.td}>
+                  <td data-label="رقم العملية" className={tableCls.td}>
                     <span className="num text-muted-foreground">{t.id}</span>
                   </td>
-                  <td className={tableCls.td}>{txType[t.type]}</td>
-                  <td className={tableCls.td}>{t.note}</td>
-                  <td className={tableCls.td}>{formatDate(t.date)}</td>
-                  <td className={tableCls.td}>
+                  <td data-label="النوع" className={tableCls.td}>
+                    {txType[t.type]}
+                  </td>
+                  <td data-label="الوصف" className={tableCls.td}>
+                    {t.note}
+                  </td>
+                  <td data-label="التاريخ" className={tableCls.td}>
+                    {formatDate(t.date)}
+                  </td>
+                  <td data-label="المبلغ" className={tableCls.td}>
                     <span
                       className={cn(
                         "num font-semibold",
@@ -136,7 +147,7 @@ function TransactionsPage() {
                       {formatUSDFixed(t.amount)}
                     </span>
                   </td>
-                  <td className={tableCls.td}>
+                  <td data-label="الحالة" className={tableCls.td}>
                     <StatusBadge tone={txStatus[t.status].tone}>
                       {txStatus[t.status].label}
                     </StatusBadge>

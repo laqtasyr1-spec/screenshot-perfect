@@ -8,7 +8,7 @@
 - [x] Admin dashboard: overview, users, plans/rates, requests, withdrawals, transactions, reports
 - [x] QA: mobile + desktop screenshots, links, head metadata
 - [x] Visual identity + motion redesign (sapphire palette, 3 signature moments, trust micro-motion)
-- [ ] Mobile/touch pass: hero, plans and calculator checked at 375px; full tap-target audit of dashboards still open
+- [ ] Mobile-first redesign pass (owner: phone matters most) — landing page first, then dashboards
 - [x] Realistic pillar emblem (front view, fluted columns, gold architrave, stepped base, single light source)
 - [x] Logo redesign: colour / mono / favicon variants + favicon.svg
 - [x] Admin plan edits flow into the store's estimates (optional `plans` argument, tested)

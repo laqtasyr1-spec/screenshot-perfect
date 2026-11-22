@@ -56,7 +56,7 @@ export function Calculator() {
   const segments = [0, markers[0]!.at, markers[1]!.at, 100];
 
   return (
-    <section id="calculator" className="relative py-24 md:py-32">
+    <section id="calculator" className="relative py-16 md:py-32">
       <div className="pointer-events-none absolute inset-x-0 top-1/3 h-96 bg-primary/5 blur-3xl" />
       <div className="relative mx-auto max-w-7xl px-6">
         <SectionHeading
@@ -65,15 +65,15 @@ export function Calculator() {
           description="أدخل المبلغ واختر عدد الدورات الشهرية. تتحدد الخطة المناسبة تلقائياً، ويُحسب العائد على أصل المبلغ فقط دون إعادة استثمار الأرباح."
         />
 
-        <Reveal className="mt-14">
+        <Reveal className="mt-8 md:mt-14">
           <div className="spotlight relative grid rounded-3xl border border-border-strong bg-panel shadow-panel lg:grid-cols-[1fr_1.15fr]">
             {/* Inputs */}
-            <div className="border-b border-border p-6 md:p-10 lg:border-b-0 lg:border-e">
+            <div className="border-b border-border p-5 md:p-10 lg:border-b-0 lg:border-e">
               <label htmlFor="calc-amount" className="text-sm font-medium">
                 مبلغ الاستثمار
               </label>
-              <div className="relative mt-3">
-                <span className="pointer-events-none absolute end-4 top-1/2 -translate-y-1/2 font-display text-2xl text-muted-foreground">
+              <div className="relative mt-3" dir="ltr">
+                <span className="pointer-events-none absolute start-4 top-1/2 -translate-y-1/2 font-display text-2xl text-muted-foreground">
                   $
                 </span>
                 <Input
@@ -82,7 +82,7 @@ export function Calculator() {
                   dir="ltr"
                   value={input}
                   onChange={(e) => setInput(e.target.value.replace(/[^\d.]/g, ""))}
-                  className="h-16 pe-12 text-start font-display text-3xl font-semibold md:text-3xl"
+                  className="h-14 ps-10 text-start font-display text-2xl font-semibold sm:h-16 md:text-3xl"
                   aria-describedby="calc-amount-hint"
                 />
               </div>
@@ -94,6 +94,24 @@ export function Calculator() {
                   ? `الحد الأدنى ${MIN_INVESTMENT}$ — لا يوجد حد أعلى`
                   : `الحد الأدنى للاستثمار هو ${MIN_INVESTMENT}$`}
               </p>
+
+              {/* Phones: the answer right under the amount, before scrolling */}
+              {valid && result.plan && (
+                <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-primary/30 bg-primary/5 px-3.5 py-2.5 sm:hidden">
+                  <span className="min-w-0 text-xs text-muted-foreground">
+                    {result.plan.name} ·{" "}
+                    <span className="num text-primary">
+                      {formatPercent(result.plan.monthlyRate)}
+                    </span>
+                  </span>
+                  <span className="shrink-0 text-xs text-muted-foreground">
+                    شهرياً{" "}
+                    <span className="num text-sm font-semibold text-success">
+                      {formatUSDFixed(result.monthlyReturn)}
+                    </span>
+                  </span>
+                </div>
+              )}
 
               <div className="relative mt-8 pb-12">
                 {/* tier bands behind the track */}
@@ -149,14 +167,14 @@ export function Calculator() {
 
               <p className="mb-4 mt-5 text-xs leading-6 text-muted-foreground">{TIER_RULE_NOTE}</p>
 
-              <div className="mt-2 flex flex-wrap gap-2">
+              <div className="mt-2 grid grid-cols-4 gap-2 sm:flex sm:flex-wrap">
                 {QUICK.map((q) => (
                   <button
                     key={q}
                     type="button"
                     onClick={() => setInput(String(q))}
                     className={cn(
-                      "num min-h-9 rounded-full border px-3.5 py-1.5 text-xs transition-colors",
+                      "num min-h-10 rounded-full border px-2 py-1.5 text-xs transition-colors sm:min-h-9 sm:px-3.5",
                       amount === q
                         ? "border-primary bg-primary/10 text-primary"
                         : "border-border-strong text-muted-foreground hover:text-foreground",
@@ -167,7 +185,7 @@ export function Calculator() {
                 ))}
               </div>
 
-              <div className="mt-10">
+              <div className="mt-8 md:mt-10">
                 <p className="text-sm font-medium">المدة الافتراضية (عدد الدورات الشهرية)</p>
                 <div
                   className="mt-3 grid grid-cols-5 gap-1.5 rounded-xl border border-border bg-background/40 p-1.5"
@@ -182,7 +200,7 @@ export function Calculator() {
                       aria-checked={months === d}
                       onClick={() => setMonths(d)}
                       className={cn(
-                        "relative rounded-lg py-2.5 text-sm transition-colors",
+                        "relative min-h-12 rounded-lg py-1.5 text-sm transition-colors",
                         months === d
                           ? "text-primary-foreground"
                           : "text-muted-foreground hover:text-foreground",
@@ -195,16 +213,19 @@ export function Calculator() {
                           transition={{ type: "spring", stiffness: 380, damping: 32 }}
                         />
                       )}
-                      <span className="relative">
-                        {d} {d === 1 ? "شهر" : d <= 10 ? "أشهر" : "شهراً"}
+                      <span className="relative block">
+                        <span className="num block text-base font-semibold leading-5">{d}</span>
+                        <span className="block text-[11px] leading-4">
+                          {d === 1 ? "شهر" : d <= 10 ? "أشهر" : "شهراً"}
+                        </span>
                       </span>
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Tier track */}
-              <div className="mt-10">
+              {/* Tier track (phones get the summary under the amount instead) */}
+              <div className="mt-10 hidden sm:block">
                 <p className="mb-3 text-sm font-medium">الخطة المطابقة للمبلغ</p>
                 <div className="relative">
                   <div className="grid grid-cols-3 gap-1">
@@ -230,9 +251,9 @@ export function Calculator() {
             </div>
 
             {/* Results */}
-            <div className="flex flex-col p-6 md:p-10">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="relative col-span-2 grid grid-cols-[minmax(0,1fr)_5rem] items-end gap-4 overflow-hidden rounded-2xl border border-primary/30 bg-primary/5 p-5">
+            <div className="flex flex-col p-5 md:p-10">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                <div className="relative col-span-2 grid grid-cols-[minmax(0,1fr)_3.5rem] items-end gap-3 sm:grid-cols-[minmax(0,1fr)_5rem] sm:gap-4 overflow-hidden rounded-2xl border border-primary/30 bg-primary/5 p-5">
                   <div className="min-w-0">
                     <span className="mb-3 inline-flex rounded-full border border-gold/30 bg-gold-soft px-2.5 py-0.5 text-[11px] text-gold">
                       تقديري وغير مضمون
@@ -247,18 +268,18 @@ export function Calculator() {
                   </div>
                   <GrowingPillar
                     value={toPosition(valid ? amount : MIN_INVESTMENT) / 100}
-                    className="w-20"
+                    className="w-14 sm:w-20"
                   />
                 </div>
-                <div className="rounded-2xl border border-border bg-background/30 p-5">
+                <div className="min-w-0 rounded-2xl border border-border bg-background/30 p-4 sm:p-5">
                   <p className="text-xs text-muted-foreground">العائد الشهري التقديري</p>
-                  <p className="mt-2 text-2xl font-semibold text-success">
+                  <p className="mt-2 text-xl font-semibold text-success sm:text-2xl">
                     <Odometer text={formatUSDFixed(result.monthlyReturn)} />
                   </p>
                 </div>
-                <div className="rounded-2xl border border-border bg-background/30 p-5">
+                <div className="min-w-0 rounded-2xl border border-border bg-background/30 p-4 sm:p-5">
                   <p className="text-xs text-muted-foreground">إجمالي العائد التقديري</p>
-                  <p className="mt-2 text-2xl font-semibold text-gold">
+                  <p className="mt-2 text-xl font-semibold text-gold sm:text-2xl">
                     <Odometer text={formatUSDFixed(result.totalReturn)} />
                   </p>
                 </div>
@@ -277,7 +298,7 @@ export function Calculator() {
                   </span>
                 </div>
               </div>
-              <div className="mt-3 h-52 flex-1" dir="ltr">
+              <div className="mt-3 h-44 flex-1 sm:h-52" dir="ltr">
                 {chartData.length === 0 ? (
                   <div
                     className="grid h-full place-items-center rounded-2xl border border-dashed border-border text-sm text-muted-foreground"

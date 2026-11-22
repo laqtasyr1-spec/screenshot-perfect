@@ -1,7 +1,16 @@
 import { useState, type ReactNode } from "react";
 import { Link, useNavigate, type LinkProps } from "@tanstack/react-router";
 import type { LucideIcon } from "lucide-react";
-import { Bell, ChevronDown, FlaskConical, LogOut, Menu, Search, UserRound } from "lucide-react";
+import {
+  Bell,
+  ChevronDown,
+  FlaskConical,
+  LogOut,
+  Menu,
+  MoreHorizontal,
+  Search,
+  UserRound,
+} from "lucide-react";
 import { openCommandPalette } from "./CommandPalette";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
@@ -21,6 +30,8 @@ export interface NavItem {
   label: string;
   icon: LucideIcon;
   exact?: boolean;
+  /** Short label; when set the item also appears in the phone bottom bar. */
+  tab?: string;
 }
 
 interface Props {
@@ -126,12 +137,12 @@ export function AppShell({ area, nav, userName, userRole, children }: Props) {
 
       <div className="lg:ps-72">
         <header className="no-print sticky top-0 z-20 border-b border-border bg-background/80 backdrop-blur-xl">
-          <div className="flex h-16 items-center justify-between gap-4 px-4 md:px-8">
+          <div className="flex h-14 items-center justify-between gap-3 px-4 md:h-16 md:px-8">
             <div className="flex items-center gap-3">
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-11 w-11 lg:hidden"
+                className="hidden h-11 w-11 md:inline-flex lg:hidden"
                 onClick={() => setOpen(true)}
                 aria-label="فتح القائمة"
               >
@@ -208,10 +219,63 @@ export function AppShell({ area, nav, userName, userRole, children }: Props) {
             </div>
           </div>
         </header>
-        <main className="px-4 pb-[max(2rem,env(safe-area-inset-bottom))] pt-6 md:px-8 md:py-10">
+        <main className="px-4 pb-[calc(6rem+env(safe-area-inset-bottom))] pt-5 md:px-8 md:py-10">
           {children}
         </main>
       </div>
+
+      <BottomTabs nav={nav} area={area} onMore={() => setOpen(true)} />
     </div>
+  );
+}
+
+/** Phone-only bottom bar: the main sections within thumb reach, plus "more" for the rest. */
+function BottomTabs({
+  nav,
+  area,
+  onMore,
+}: {
+  nav: NavItem[];
+  area: Props["area"];
+  onMore: () => void;
+}) {
+  const tabs = nav.filter((n) => n.tab);
+  return (
+    <nav
+      aria-label={area === "admin" ? "أقسام الإدارة" : "أقسام حسابي"}
+      className="no-print fixed inset-x-0 bottom-0 z-30 border-t border-border bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden"
+    >
+      <div className="grid grid-cols-5">
+        {tabs.map((t) => (
+          <Link
+            key={t.to}
+            to={t.to}
+            activeOptions={{ exact: t.exact ?? false }}
+            className="group relative flex min-h-16 flex-col items-center justify-center gap-1 px-1 text-[11px] text-muted-foreground transition-colors data-[status=active]:text-primary"
+          >
+            {({ isActive }) => (
+              <>
+                <span
+                  className={cn(
+                    "absolute inset-x-5 top-0 h-0.5 rounded-full bg-primary transition-opacity",
+                    isActive ? "opacity-100" : "opacity-0",
+                  )}
+                />
+                <t.icon className="h-5 w-5" strokeWidth={isActive ? 2 : 1.7} />
+                <span className="max-w-full truncate">{t.tab}</span>
+              </>
+            )}
+          </Link>
+        ))}
+        <button
+          type="button"
+          onClick={onMore}
+          className="flex min-h-16 flex-col items-center justify-center gap-1 px-1 text-[11px] text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <MoreHorizontal className="h-5 w-5" strokeWidth={1.7} />
+          المزيد
+        </button>
+      </div>
+    </nav>
   );
 }

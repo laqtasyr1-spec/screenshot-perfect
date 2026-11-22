@@ -117,19 +117,23 @@ function InvestmentsPage() {
                 const p = getPlanById(i.planId);
                 return (
                   <tr key={i.id} className={tableCls.tr}>
-                    <td className={tableCls.td}>
+                    <td data-label="الخطة" className={tableCls.td}>
                       <p className="font-medium">{p.name}</p>
                       <p className="num text-end text-xs text-muted-foreground">{i.id}</p>
                     </td>
-                    <td className={tableCls.td}>
+                    <td data-label="المبلغ المستثمر" className={tableCls.td}>
                       <span className="num font-semibold">{formatUSD(i.amount)}</span>
                     </td>
-                    <td className={tableCls.td}>{formatDate(i.startDate)}</td>
-                    <td className={tableCls.td}>{formatDate(i.maturityDate)}</td>
-                    <td className={tableCls.td}>
+                    <td data-label="تاريخ البداية" className={tableCls.td}>
+                      {formatDate(i.startDate)}
+                    </td>
+                    <td data-label="تاريخ الاستحقاق" className={tableCls.td}>
+                      {formatDate(i.maturityDate)}
+                    </td>
+                    <td data-label="العائد التقديري" className={tableCls.td}>
                       <span className="num text-primary">{formatUSDFixed(i.estimatedReturn)}</span>
                     </td>
-                    <td className={tableCls.td}>
+                    <td data-label="الحالة" className={tableCls.td}>
                       <StatusBadge tone={investmentStatus[i.status].tone}>
                         {investmentStatus[i.status].label}
                       </StatusBadge>

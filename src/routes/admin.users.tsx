@@ -108,7 +108,7 @@ function UsersPage() {
               {rows.length === 0 && <EmptyRow colSpan={6} />}
               {rows.map((u) => (
                 <tr key={u.id} className={tableCls.tr}>
-                  <td className={tableCls.td}>
+                  <td data-label="المستخدم" className={tableCls.td}>
                     <div className="flex items-center gap-3">
                       <span className="grid h-9 w-9 place-items-center rounded-full bg-surface-raised text-sm font-semibold">
                         {u.name.charAt(0)}
@@ -121,12 +121,16 @@ function UsersPage() {
                       </div>
                     </div>
                   </td>
-                  <td className={tableCls.td}>{u.city}</td>
-                  <td className={tableCls.td}>{formatDate(u.joined)}</td>
-                  <td className={tableCls.td}>
+                  <td data-label="المدينة" className={tableCls.td}>
+                    {u.city}
+                  </td>
+                  <td data-label="تاريخ التسجيل" className={tableCls.td}>
+                    {formatDate(u.joined)}
+                  </td>
+                  <td data-label="إجمالي الاستثمار" className={tableCls.td}>
                     <span className="num font-semibold">{formatUSD(u.invested)}</span>
                   </td>
-                  <td className={tableCls.td}>
+                  <td data-label="الحالة" className={tableCls.td}>
                     <StatusBadge tone={userStatus[u.status].tone}>
                       {userStatus[u.status].label}
                     </StatusBadge>

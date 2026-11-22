@@ -50,7 +50,7 @@ export function TransparencyStrip() {
         whileInView="on"
         viewport={{ once: true, margin: "-60px" }}
         variants={{ on: { transition: { staggerChildren: 0.12 } } }}
-        className="mx-auto grid max-w-7xl gap-px px-6 sm:grid-cols-2 lg:grid-cols-4"
+        className="mx-auto grid max-w-7xl grid-cols-2 gap-x-4 px-6 py-2 sm:py-0 lg:grid-cols-4"
       >
         {TERMS.map((t, i) => (
           <motion.li
@@ -59,12 +59,14 @@ export function TransparencyStrip() {
               off: { opacity: 0, y: 10 },
               on: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
             }}
-            className="flex items-start gap-3 py-6 lg:px-5 lg:first:ps-0"
+            className="flex items-start gap-2 py-3 sm:gap-3 sm:py-6 lg:px-5 lg:first:ps-0"
           >
-            <DrawCheck delay={0.15 + i * 0.12} className="mt-0.5 h-6 w-6" />
-            <div>
-              <p className="font-semibold">{t.title}</p>
-              <p className="mt-1 text-xs leading-6 text-muted-foreground">{t.text}</p>
+            <DrawCheck delay={0.15 + i * 0.12} className="mt-0.5 h-5 w-5 shrink-0 sm:h-6 sm:w-6" />
+            <div className="min-w-0">
+              <p className="text-sm font-semibold sm:text-base">{t.title}</p>
+              <p className="mt-1 text-[11px] leading-5 text-muted-foreground sm:text-xs sm:leading-6">
+                {t.text}
+              </p>
             </div>
           </motion.li>
         ))}

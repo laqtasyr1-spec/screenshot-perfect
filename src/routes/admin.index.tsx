@@ -49,7 +49,7 @@ function AdminOverview() {
         title="لوحة القيادة"
         description="نظرة شاملة على نشاط المنصة والطلبات التي تحتاج إلى مراجعة."
       />
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-5 [&>*:first-child]:col-span-2 sm:[&>*:first-child]:col-span-1 xl:[&>*:first-child]:col-span-1">
         <StatCard
           index={0}
           label="إجمالي المستخدمين"

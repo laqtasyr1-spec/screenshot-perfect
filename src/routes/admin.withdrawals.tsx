@@ -84,21 +84,27 @@ function AdminWithdrawals() {
               {rows.length === 0 && <EmptyRow colSpan={7} />}
               {rows.map((w) => (
                 <tr key={w.id} className={tableCls.tr}>
-                  <td className={tableCls.td}>
+                  <td data-label="رقم الطلب" className={tableCls.td}>
                     <span className="num text-muted-foreground">{w.id}</span>
                   </td>
-                  <td className={tableCls.td}>{w.user}</td>
-                  <td className={tableCls.td}>
+                  <td data-label="المستثمر" className={tableCls.td}>
+                    {w.user}
+                  </td>
+                  <td data-label="المبلغ" className={tableCls.td}>
                     <span className="num font-semibold">{formatUSDFixed(w.amount)}</span>
                   </td>
-                  <td className={tableCls.td}>{w.method}</td>
-                  <td className={tableCls.td}>{formatDate(w.date)}</td>
-                  <td className={tableCls.td}>
+                  <td data-label="الطريقة" className={tableCls.td}>
+                    {w.method}
+                  </td>
+                  <td data-label="التاريخ" className={tableCls.td}>
+                    {formatDate(w.date)}
+                  </td>
+                  <td data-label="الحالة" className={tableCls.td}>
                     <StatusBadge tone={withdrawalStatus[w.status].tone}>
                       {withdrawalStatus[w.status].label}
                     </StatusBadge>
                   </td>
-                  <td className={tableCls.td}>
+                  <td data-label="الإجراء" className={tableCls.td}>
                     {w.status === "pending" && (
                       <ReviewActions
                         approveLabel="موافقة"

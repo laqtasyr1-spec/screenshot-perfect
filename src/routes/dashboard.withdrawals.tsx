@@ -70,7 +70,7 @@ function WithdrawalsPage() {
   return (
     <>
       <PageHeader title="السحوبات" description="اطلب سحب رصيدك المتاح وتابع حالة طلباتك." />
-      <div className="mb-6 grid gap-4 sm:grid-cols-3">
+      <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 [&>*:first-child]:col-span-2 sm:[&>*:first-child]:col-span-1">
         <StatCard
           tone="primary"
           label="المبلغ المتاح للسحب"
@@ -159,7 +159,7 @@ function WithdrawalsPage() {
 
         <Panel title="طلبات السحب">
           <div className={tableCls.wrap}>
-            <table className="w-full min-w-[560px] text-sm">
+            <table className={tableCls.table}>
               <thead>
                 <tr>
                   {["رقم الطلب", "المبلغ", "الطريقة", "التاريخ", "الحالة"].map((h) => (
@@ -173,15 +173,19 @@ function WithdrawalsPage() {
                 {withdrawals.length === 0 && <EmptyRow colSpan={5} text="لا توجد طلبات سحب بعد." />}
                 {withdrawals.map((w) => (
                   <tr key={w.id} className={tableCls.tr}>
-                    <td className={tableCls.td}>
+                    <td data-label="رقم الطلب" className={tableCls.td}>
                       <span className="num text-muted-foreground">{w.id}</span>
                     </td>
-                    <td className={tableCls.td}>
+                    <td data-label="المبلغ" className={tableCls.td}>
                       <span className="num font-semibold">{formatUSDFixed(w.amount)}</span>
                     </td>
-                    <td className={tableCls.td}>{w.method}</td>
-                    <td className={tableCls.td}>{formatDate(w.date)}</td>
-                    <td className={tableCls.td}>
+                    <td data-label="الطريقة" className={tableCls.td}>
+                      {w.method}
+                    </td>
+                    <td data-label="التاريخ" className={tableCls.td}>
+                      {formatDate(w.date)}
+                    </td>
+                    <td data-label="الحالة" className={tableCls.td}>
                       <StatusBadge tone={withdrawalStatus[w.status].tone}>
                         {withdrawalStatus[w.status].label}
                       </StatusBadge>

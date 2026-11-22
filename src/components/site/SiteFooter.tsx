@@ -3,9 +3,9 @@ import { Logo } from "./Logo";
 
 export function SiteFooter() {
   return (
-    <footer className="relative mt-24 border-t border-border bg-sidebar">
+    <footer className="relative mt-16 border-t border-border bg-sidebar md:mt-24">
       <div className="hairline-gold absolute inset-x-0 top-0" />
-      <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 md:grid-cols-12">
+      <div className="mx-auto grid max-w-7xl gap-8 px-6 py-12 md:grid-cols-12 md:gap-12 md:py-16">
         <div className="md:col-span-5">
           <Logo variant="mono" />
           <p className="mt-5 max-w-sm text-sm leading-7 text-muted-foreground">
@@ -15,7 +15,7 @@ export function SiteFooter() {
         </div>
         <div className="md:col-span-3">
           <h3 className="mb-4 font-sans text-sm font-semibold text-foreground">المنصة</h3>
-          <ul className="space-y-3 text-sm text-muted-foreground">
+          <ul className="grid grid-cols-2 gap-3 text-sm text-muted-foreground md:block md:space-y-3">
             <li>
               <Link to="/plans" className="hover:text-primary">
                 فرص الاستثمار

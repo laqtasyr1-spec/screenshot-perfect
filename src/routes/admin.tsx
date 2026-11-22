@@ -24,11 +24,16 @@ export const Route = createFileRoute("/admin")({
 });
 
 const NAV: NavItem[] = [
-  { to: "/admin", label: "لوحة القيادة", icon: Gauge, exact: true },
-  { to: "/admin/users", label: "المستخدمون", icon: Users },
+  { to: "/admin", label: "لوحة القيادة", icon: Gauge, exact: true, tab: "القيادة" },
+  { to: "/admin/users", label: "المستخدمون", icon: Users, tab: "المستخدمون" },
   { to: "/admin/plans", label: "الخطط ونسب العوائد", icon: SlidersHorizontal },
-  { to: "/admin/requests", label: "طلبات الاستثمار والإيداع", icon: ClipboardCheck },
-  { to: "/admin/withdrawals", label: "طلبات السحب", icon: ArrowDownToLine },
+  {
+    to: "/admin/requests",
+    label: "طلبات الاستثمار والإيداع",
+    icon: ClipboardCheck,
+    tab: "الطلبات",
+  },
+  { to: "/admin/withdrawals", label: "طلبات السحب", icon: ArrowDownToLine, tab: "السحب" },
   { to: "/admin/transactions", label: "سجل العمليات", icon: ReceiptText },
   { to: "/admin/reports", label: "التقارير المالية", icon: BarChart3 },
 ];

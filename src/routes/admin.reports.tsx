@@ -87,16 +87,21 @@ function Reports() {
         }
       />
 
-      <div className="mb-6 grid gap-4 sm:grid-cols-4">
+      <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
         {[
           ["إجمالي الإيداعات", totals.d, "text-foreground"],
           ["إجمالي السحوبات", totals.w, "text-gold"],
           ["الأرباح المسجلة", totals.p, "text-primary"],
           ["صافي التدفق", totals.d - totals.w, "text-foreground"],
         ].map(([l, v, c]) => (
-          <div key={l as string} className="rounded-2xl border border-border bg-card p-5">
-            <p className="text-sm text-muted-foreground">{l}</p>
-            <p className={`num mt-2 text-start font-display text-2xl font-semibold ${c}`}>
+          <div
+            key={l as string}
+            className="min-w-0 rounded-2xl border border-border bg-card p-4 sm:p-5"
+          >
+            <p className="text-xs leading-5 text-muted-foreground sm:text-sm">{l}</p>
+            <p
+              className={`num mt-2 truncate text-start font-display text-xl font-semibold sm:text-2xl ${c}`}
+            >
               {formatUSD(v as number)}
             </p>
           </div>

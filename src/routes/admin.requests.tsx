@@ -106,21 +106,27 @@ function RequestsPage() {
                   {inv.length === 0 && <EmptyRow colSpan={7} />}
                   {inv.map((r) => (
                     <tr key={r.id} className={tableCls.tr}>
-                      <td className={tableCls.td}>
+                      <td data-label="رقم الطلب" className={tableCls.td}>
                         <span className="num text-muted-foreground">{r.id}</span>
                       </td>
-                      <td className={tableCls.td}>{r.user}</td>
-                      <td className={tableCls.td}>{getPlanById(r.planId).name}</td>
-                      <td className={tableCls.td}>
+                      <td data-label="المستثمر" className={tableCls.td}>
+                        {r.user}
+                      </td>
+                      <td data-label="الخطة" className={tableCls.td}>
+                        {getPlanById(r.planId).name}
+                      </td>
+                      <td data-label="المبلغ" className={tableCls.td}>
                         <span className="num font-semibold">{formatUSD(r.amount)}</span>
                       </td>
-                      <td className={tableCls.td}>{formatDate(r.date)}</td>
-                      <td className={tableCls.td}>
+                      <td data-label="التاريخ" className={tableCls.td}>
+                        {formatDate(r.date)}
+                      </td>
+                      <td data-label="الحالة" className={tableCls.td}>
                         <StatusBadge tone={requestStatus[r.status].tone}>
                           {requestStatus[r.status].label}
                         </StatusBadge>
                       </td>
-                      <td className={tableCls.td}>
+                      <td data-label="الإجراء" className={tableCls.td}>
                         {r.status === "pending" ? (
                           <ReviewActions
                             onApprove={() => {
@@ -170,24 +176,30 @@ function RequestsPage() {
                   {dep.length === 0 && <EmptyRow colSpan={8} />}
                   {dep.map((r) => (
                     <tr key={r.id} className={tableCls.tr}>
-                      <td className={tableCls.td}>
+                      <td data-label="رقم الطلب" className={tableCls.td}>
                         <span className="num text-muted-foreground">{r.id}</span>
                       </td>
-                      <td className={tableCls.td}>{r.user}</td>
-                      <td className={tableCls.td}>
+                      <td data-label="المستثمر" className={tableCls.td}>
+                        {r.user}
+                      </td>
+                      <td data-label="المبلغ" className={tableCls.td}>
                         <span className="num font-semibold">{formatUSD(r.amount)}</span>
                       </td>
-                      <td className={tableCls.td}>{r.method}</td>
-                      <td className={tableCls.td}>
+                      <td data-label="الطريقة" className={tableCls.td}>
+                        {r.method}
+                      </td>
+                      <td data-label="مرجع التحويل" className={tableCls.td}>
                         <span className="num">{r.reference}</span>
                       </td>
-                      <td className={tableCls.td}>{formatDate(r.date)}</td>
-                      <td className={tableCls.td}>
+                      <td data-label="التاريخ" className={tableCls.td}>
+                        {formatDate(r.date)}
+                      </td>
+                      <td data-label="الحالة" className={tableCls.td}>
                         <StatusBadge tone={requestStatus[r.status].tone}>
                           {requestStatus[r.status].label}
                         </StatusBadge>
                       </td>
-                      <td className={tableCls.td}>
+                      <td data-label="الإجراء" className={tableCls.td}>
                         {r.status === "pending" ? (
                           <ReviewActions
                             approveLabel="تأكيد الاستلام"
